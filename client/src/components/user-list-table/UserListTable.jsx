@@ -57,7 +57,9 @@ export default function UserListTable() {
   };
 
   const deleteUserHandler = async () => {
-    await userService.deleteUser(selectedUser);
+    const result = await userService.deleteUser(selectedUser);
+
+    setUsers((state) => state.filter((user) => user._id !== selectedUser));
 
     setShowDeleteModal(false);
   };
