@@ -1,3 +1,5 @@
+import { formatDate } from "../../utils/dataUtils.js";
+
 export default function UserListItem({
   firstName,
   lastName,
@@ -15,7 +17,7 @@ export default function UserListItem({
       <td>{lastName}</td>
       <td>{email}</td>
       <td>{phoneNumber}</td>
-      <td>{createdAt}</td>
+      <td>{formatDate(createdAt)}</td>
 
       <td className="actions">
         <button className="btn edit-btn" title="Edit">
