@@ -29,10 +29,12 @@ export const create = async (userData) => {
   const response = await fetch(baseUrl, {
     method: 'POST',
     headers: {
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
     },
     body: JSON.stringify(body),
   });
 
-  return response;
+  const result = await response.json();
+
+  return result;
 }
