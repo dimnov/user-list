@@ -25,13 +25,12 @@ export default function UserListTable() {
   const userCreateHandler = async (e) => {
     e.preventDefault();
 
-    try {
-      const data = Object.fromEntries(new FormData(e.currentTarget));
-      await userService.create(data);
-      setShowCreateModal(false);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const newUser = await userService.create(data);
+
+    setUsers((state) => [...state, newUser]);
+
+    setShowCreateModal(false);
   };
 
   return (
