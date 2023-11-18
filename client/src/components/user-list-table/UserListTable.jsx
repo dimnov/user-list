@@ -1,6 +1,14 @@
+import { useEffect, useState } from "react";
 import UserListItem from "../user-list-item/UserListItem.jsx";
+import * as userService from "../../services/userService.js";
 
 export default function UserListTable() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    userService.getAll().then(setUsers);
+  }, []);
+
   return (
     <div className="table-wrapper">
       {/* <!-- Overlap components  -->
@@ -172,7 +180,10 @@ export default function UserListTable() {
         </thead>
         <tbody>
           {/* <!-- Table row component --> */}
-          <UserListItem />
+
+          {users.map((user) => (
+            <UserListItem key={user._id} {...user} />
+          ))}
         </tbody>
       </table>
     </div>
