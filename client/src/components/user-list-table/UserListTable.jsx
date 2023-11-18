@@ -8,7 +8,10 @@ export default function UserListTable() {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
-    userService.getAll().then(setUsers);
+    userService
+      .getAll()
+      .then(setUsers)
+      .catch((err) => console.log(err));
   }, []);
 
   const createUserClickHandler = () => {
@@ -19,10 +22,25 @@ export default function UserListTable() {
     setShowCreateModal(false);
   };
 
+  const userCreateHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = Object.fromEntries(new FormData(e.currentTarget));
+      await userService.create(data);
+      setShowCreateModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="table-wrapper">
       {showCreateModal ? (
-        <CreateUserModal hideModal={hideCreateUserModal} />
+        <CreateUserModal
+          onUserCreate={userCreateHandler}
+          onClose={hideCreateUserModal}
+        />
       ) : null}
 
       <table className="table">
