@@ -5,6 +5,9 @@ function App() {
   return (
     <>
       <Header />
+      <main class="main">
+        <Search />
+      </main>
       <Footer />
     </>
   );
