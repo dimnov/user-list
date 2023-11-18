@@ -1,6 +1,7 @@
 import { formatDate } from "../../utils/dataUtils.js";
 
 export default function UserListItem({
+  _id,
   firstName,
   lastName,
   email,
