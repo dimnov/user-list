@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import UserListItem from "../user-list-item/UserListItem.jsx";
 import * as userService from "../../services/userService.js";
 import CreateUserModal from "../create-user-modal/CreateUserModal.jsx";
+import UserDetailsModal from "../user-details-modal/UserDetailsModal.jsx";
 
 export default function UserListTable() {
   const [users, setUsers] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     userService
@@ -22,6 +25,14 @@ export default function UserListTable() {
     setShowCreateModal(false);
   };
 
+  const showDetailsClickHandler = () => {
+    setShowDetailsModal(true);
+  };
+
+  const hideDetailsModal = () => {
+    setShowDetailsModal(false);
+  };
+
   const userCreateHandler = async (e) => {
     e.preventDefault();
 
@@ -33,6 +44,11 @@ export default function UserListTable() {
     setShowCreateModal(false);
   };
 
+  const userDetailsClickHandler = (userId) => {
+    setSelectedUser(userId);
+    setShowDetailsModal(true);
+  };
+
   return (
     <div className="table-wrapper">
       {showCreateModal ? (
@@ -40,6 +56,10 @@ export default function UserListTable() {
           onUserCreate={userCreateHandler}
           onClose={hideCreateUserModal}
         />
+      ) : null}
+
+      {showDetailsModal ? (
+        <UserDetailsModal onClose={hideDetailsModal} userId={selectedUser} />
       ) : null}
 
       <table className="table">
@@ -141,7 +161,11 @@ export default function UserListTable() {
         </thead>
         <tbody>
           {users.map((user) => (
-            <UserListItem key={user._id} {...user} />
+            <UserListItem
+              key={user._id}
+              {...user}
+              onDetailsClick={userDetailsClickHandler}
+            />
           ))}
         </tbody>
       </table>

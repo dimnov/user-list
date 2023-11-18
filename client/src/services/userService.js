@@ -1,5 +1,3 @@
-import { formatDate } from "../utils/dataUtils.js";
-
 const baseUrl = 'http://localhost:3030/jsonstore/users';
 
 export const getAll = async () => {
@@ -8,6 +6,13 @@ export const getAll = async () => {
 
   const data = Object.values(result);
   return data;
+}
+
+export const getOne = async (userId) => {
+  const response = await fetch(`${baseUrl}/${userId}`);
+  const result = await response.json();
+
+  return result;
 }
 
 export const create = async (userData) => {

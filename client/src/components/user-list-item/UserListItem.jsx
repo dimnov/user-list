@@ -8,7 +8,11 @@ export default function UserListItem({
   phoneNumber,
   createdAt,
   imageUrl,
+  onDetailsClick,
 }) {
+  const detailsClickHandler = () => {
+    onDetailsClick(_id);
+  };
   return (
     <tr>
       <td>
@@ -55,7 +59,11 @@ export default function UserListItem({
             ></path>
           </svg>
         </button>
-        <button className="btn info-btn" title="Info">
+        <button
+          className="btn info-btn"
+          title="Info"
+          onClick={detailsClickHandler}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
